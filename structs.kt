@@ -5,6 +5,7 @@ import kotlin.system.measureTimeMillis
 
 interface tree<T> {
 	fun insert(x: T)
+	fun contains(x: T): Boolean
 }
 
 
@@ -120,6 +121,17 @@ open class avl<T: Comparable<T>>(var label: T, var left: avl<T>? = null, var rig
 		size += 1
 		setHeight()
 		balance()
+	}
+
+	override fun contains(x: T): Boolean {
+		var a = label == x
+		left?.let {
+			a = a || it.contains(x)
+		}
+		right?.let {
+			a = a || it.contains(x)
+		}
+		return a
 	}
 }
 
